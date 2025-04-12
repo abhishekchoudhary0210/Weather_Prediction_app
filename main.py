@@ -18,71 +18,126 @@ warnings.filterwarnings("ignore", message="'H' is deprecated")
 # Set page config
 st.set_page_config(page_title="Delhi Weather Forecasting Dashboard", layout="wide")
 
-# Title and description with dark theme styling
+# Global CSS for consistent styling
 st.markdown(
     """
     <style>
+    /* Base styles */
+    body {
+        color: #e0e0e0 !important;
+        background-color: #0e1117 !important;
+    }
+    
+    /* Title and headers */
     .title {
         text-align: center;
         font-size: 2.5em !important;
-        color: #4fc3f7;  /* Changed to match metric-value color */
+        color: #4fc3f7;
         padding: 0.5em;
         border-radius: 8px;
         background-color: #1a1a1a;
         margin-bottom: 0.5em;
         border: 1px solid #444;
-        font-weight: bold;  /* Added to match metric-value weight */
-    }
-    .description {
-        text-align: center;
-        font-size: 1.1em;
-        color: #e0e0e0;
-        padding: 1.5em;
-        background-color: #1a1a1a;
-        border-radius: 8px;
-        margin-bottom: 1.5em;
-        border: 1px solid #444;
-    }
-    .metric-container {
-        background-color: #1a1a1a;
-        padding: 1em;
-        border-radius: 8px;
-        border: 1px solid #444;
-        margin-bottom: 1em;
-    }
-    .metric-value {
-        font-size: 1.5em;
         font-weight: bold;
-        color: #4fc3f7;
-        margin-bottom: 0.2em;
-    }
-    .metric-label {
-        font-size: 0.9em;
-        color: #b0b0b0;
-    }
-    hr {
-        border-color: #444;
-    }
-    body {
-        background-image: url('https://images.pexels.com/photos/1431822/pexels-photo-1431822.jpeg?cs=srgb&dl=pexels-brett-sayles-1431822.jpg&fm=jpg'); 
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-    }
-    .stApp {
-        background-color: rgba(0, 0, 0, 0.7);  /* Add dark overlay for readability */
     }
     
+    .section-title {
+        color: #4fc3f7 !important;
+        font-size: 1.25rem !important;
+        margin-top: 20px !important;
+        margin-bottom: 15px !important;
+    }
+    
+    /* Metrics styling */
+    .metric-container {
+        background-color: #1a1a1a;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        border: 1px solid #444;
+    }
+    
+    .metric-label {
+        font-size: 14px;
+        color: #b0b0b0;
+        margin-bottom: 5px;
+    }
+    
+    .metric-value {
+        font-size: 24px;
+        color: #4fc3f7;
+        font-weight: bold;
+    }
+    
+    .metric-delta {
+        font-size: 14px;
+        color: #e0e0e0;
+    }
+    
+    /* Text elements */
+    .description {
+        color: #e0e0e0 !important;
+    }
+    
+    /* Input widgets */
+    .stSlider, .stSelectbox, .stRadio {
+        color: #e0e0e0 !important;
+    }
+    
+    .st-bb, .st-at, .st-ae {
+        background-color: #1a1a1a !important;
+    }
+    
+    /* Plotly chart styling */
+    .js-plotly-plot .plotly, .modebar {
+        background-color: #1a1a1a !important;
+    }
+    
+    /* Footer */
+    footer {
+        color: #b0b0b0 !important;
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: #1a1a1a;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: #4fc3f7;
+        border-radius: 4px;
+    }
+    
+    /* Ensure all text is visible */
+    p, div, span, label {
+        color: #e0e0e0 !important;
+    }
     </style>
     """,
     unsafe_allow_html=True
 )
 
-# Centered title - now with matching color
+# Centered title
 st.markdown('<h1 class="title">🌦️ Delhi Weather Forecasting Dashboard</h1>', unsafe_allow_html=True)
+
+# Description with consistent styling
+st.markdown(
+    """
+    <div class="description">
+        This dashboard provides weather forecasts for Delhi using machine learning models trained on historical weather data.
+        Predict temperature, precipitation probability, and weather conditions for the next day.
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # Add a loading spinner while processing
 with st.spinner('Loading data and training models...'):
+    # [Rest of your existing code for data loading and model training remains the same]
     # Fetch Weather Data (Delhi)
     location = Point(28.6139, 77.2090)  # Delhi
     start = datetime(2015, 1, 1)
@@ -175,69 +230,22 @@ with st.spinner('Loading data and training models...'):
     cls_report = classification_report(y_test_cond, y_pred_cond, output_dict=True)
 
 # ======================
-# DASHBOARD LAYOUT
+# PERFORMANCE METRICS
 # ======================
 
-# Enhanced Performance Metrics with tooltips
-st.markdown(
-    """
-    <style>
-    .metrics-header {
-        text-align: center;
-        font-size: 1.8em !important;
-        color: #4fc3f7;
-        margin-bottom: 1em;
-        font-weight: bold;
-        letter-spacing: 0.5px;
-    }
-    .metric-card {
-        background-color: #1a1a1a;
-        border-radius: 8px;
-        padding: 1.2em;
-        border: 1px solid #444;
-        text-align: center;
-        position: relative;
-    }
-    .metric-title {
-        font-size: 1.1em;
-        color: #b0b0b0;
-        margin-bottom: 0.5em;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 0.3em;
-    }
-    .metric-value {
-        font-size: 1.8em;
-        font-weight: bold;
-        color: #4fc3f7;
-        margin-bottom: 0.2em;
-    }
-    .info-icon {
-        color: #4fc3f7;
-        font-size: 0.8em;
-        cursor: help;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 # Centered header
-st.markdown('<div class="metrics-header">Model Performance Overview</div>', unsafe_allow_html=True)
+st.markdown('<div class="section-title">Model Performance Overview</div>', unsafe_allow_html=True)
 
-# Metrics cards with visible info icons
+# Metrics cards
 metric1, metric2, metric3 = st.columns(3)
 
 with metric1:
     st.markdown(
         f"""
-        <div class="metric-card">
-            <div class="metric-title">
-                Temperature RMSE
-                <span class="info-icon" title="Root Mean Squared Error for temperature prediction">ⓘ</span>
-            </div>
+        <div class="metric-container">
+            <div class="metric-label">Temperature RMSE</div>
             <div class="metric-value">{rmse_temp:.2f} °C</div>
+            <div class="metric-delta">Lower is better</div>
         </div>
         """,
         unsafe_allow_html=True
@@ -246,12 +254,10 @@ with metric1:
 with metric2:
     st.markdown(
         f"""
-        <div class="metric-card">
-            <div class="metric-title">
-                Precipitation RMSE
-                <span class="info-icon" title="Root Mean Squared Error for precipitation probability">ⓘ</span>
-            </div>
+        <div class="metric-container">
+            <div class="metric-label">Precipitation RMSE</div>
             <div class="metric-value">{rmse_precip:.3f}</div>
+            <div class="metric-delta">Lower is better</div>
         </div>
         """,
         unsafe_allow_html=True
@@ -260,115 +266,63 @@ with metric2:
 with metric3:
     st.markdown(
         f"""
-        <div class="metric-card">
-            <div class="metric-title">
-                Condition Accuracy
-                <span class="info-icon" title="Accuracy for weather condition classification">ⓘ</span>
-            </div>
+        <div class="metric-container">
+            <div class="metric-label">Condition Accuracy</div>
             <div class="metric-value">{acc_cond:.2%}</div>
+            <div class="metric-delta">Higher is better</div>
         </div>
         """,
         unsafe_allow_html=True
     )
 
-
 # ======================
-# DATA SECTION -
+# DATA VISUALIZATION
 # ======================
 
-st.markdown(
-    """
-    <style>
-    .data-header {
-        text-align: center;
-        font-size: 1.5em;
-        color: #4fc3f7;
-        margin-bottom: 1em;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
+st.markdown('<div class="section-title">Weather Data Overview</div>', unsafe_allow_html=True)
+
+# Create a DataFrame for plotting
+temp_compare_df = pd.DataFrame({
+    'Date': X_test_temp.index,
+    'Actual Temperature': y_test_temp.values,
+    'Predicted Temperature': y_pred_temp
+}).sort_values('Date')
+
+# Plotly line chart with consistent styling
+fig_temp = px.line(
+    temp_compare_df,
+    x='Date',
+    y=['Actual Temperature', 'Predicted Temperature'],
+    labels={'value': 'Temperature (°C)', 'Date': 'Date'},
+    color_discrete_map={
+        'Actual Temperature': '#81c784',
+        'Predicted Temperature': '#4fc3f7'
+    },
+    title='Temperature Forecast vs Actual'
 )
 
-# Centered header
-st.markdown('<div class="data-header">Weather Data Overview</div>', unsafe_allow_html=True)
+fig_temp.update_layout(
+    template='plotly_dark',
+    plot_bgcolor='#1a1a1a',
+    paper_bgcolor='#1a1a1a',
+    font=dict(color='#e0e0e0'),
+    title_font=dict(color='#4fc3f7')
+)
 
-# Full-width graph container
-data_container = st.container()
-with data_container:
-    # Create a DataFrame for plotting
-    temp_compare_df = pd.DataFrame({
-        'Date': X_test_temp.index,
-        'Actual Temperature': y_test_temp.values,
-        'Predicted Temperature': y_pred_temp
-    }).sort_values('Date')
-
-    # Plotly line chart
-    fig_temp = px.line(
-        temp_compare_df,
-        x='Date',
-        y=['Actual Temperature', 'Predicted Temperature'],
-        labels={'value': 'Temperature (°C)', 'Date': 'Date'},
-        color_discrete_map={
-            'Actual Temperature': '#81c784',
-            'Predicted Temperature': '#4fc3f7'
-        },
-        title='Temperature Forecast vs Actual'
-    )
-
-    fig_temp.update_layout(
-        template='plotly_dark',
-        plot_bgcolor='#1a1a1a',
-        paper_bgcolor='#1a1a1a',
-        font=dict(color='#e0e0e0')
-    )
-
-    st.plotly_chart(fig_temp, use_container_width=True)
-
+st.plotly_chart(fig_temp, use_container_width=True)
 
 # ======================
-# PREDICTION INTERFACE 
+# PREDICTION INTERFACE
 # ======================
 
-# Custom CSS for consistent blue styling
-st.markdown("""
-<style>
-    .metric-container {
-        background-color: #1a1a1a;
-        border-radius: 8px;
-        padding: 15px;
-        margin-bottom: 15px;
-        border: 1px solid #444;
-    }
-    .metric-label {
-        font-size: 14px;
-        color: #b0b0b0;
-        margin-bottom: 5px;
-    }
-    .metric-value {
-        font-size: 24px;
-        color: #4fc3f7;
-        font-weight: bold;
-    }
-    .metric-delta {
-        font-size: 14px;
-    }
-    .section-title {
-        color: #4fc3f7;
-        font-size: 1.25rem;
-        margin-top: 20px;
-        margin-bottom: 15px;
-    }
-</style>
-""", unsafe_allow_html=True)
-
+st.markdown('<div class="section-title">Weather Forecast Prediction</div>', unsafe_allow_html=True)
 
 # Prediction method selection
-st.markdown("<div class='section-title'>Prediction Method</div>", unsafe_allow_html=True)
 prediction_method = st.radio(
-    "",
+    "Prediction Method:",
     ["Select historical date", "Enter parameters manually"],
-    horizontal=True
+    horizontal=True,
+    label_visibility="visible"
 )
 
 if prediction_method == "Select historical date":
@@ -395,28 +349,28 @@ if prediction_method == "Select historical date":
         current1, current2, current3 = st.columns(3)
         
         with current1:
-            st.markdown("""
+            st.markdown(f"""
             <div class='metric-container'>
                 <div class='metric-label'>Temperature</div>
-                <div class='metric-value'>%.1f°C</div>
+                <div class='metric-value'>{selected_data['temperature'].iloc[0]:.1f}°C</div>
             </div>
-            """ % selected_data['temperature'].iloc[0], unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
         
         with current2:
-            st.markdown("""
+            st.markdown(f"""
             <div class='metric-container'>
                 <div class='metric-label'>Humidity</div>
-                <div class='metric-value'>%.1f%%</div>
+                <div class='metric-value'>{selected_data['humidity'].iloc[0]:.1f}%</div>
             </div>
-            """ % selected_data['humidity'].iloc[0], unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
         
         with current3:
-            st.markdown("""
+            st.markdown(f"""
             <div class='metric-container'>
                 <div class='metric-label'>Wind Speed</div>
-                <div class='metric-value'>%.1f km/h</div>
+                <div class='metric-value'>{selected_data['wind_speed'].iloc[0]:.1f} km/h</div>
             </div>
-            """ % selected_data['wind_speed'].iloc[0], unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
         
         # Forecast results
         st.markdown("<div class='section-title'>Forecast Results</div>", unsafe_allow_html=True)
@@ -507,10 +461,13 @@ else:  # Manual input method
                 </div>
                 """, unsafe_allow_html=True)
 
-
 # Footer
 st.markdown("---")
-st.markdown("""
-
-*Powered by machine learning models*
-""")
+st.markdown(
+    """
+    <div style="text-align: center; color: #b0b0b0; font-size: 0.9em;">
+        Powered by machine learning models | Data source: Meteostat
+    </div>
+    """,
+    unsafe_allow_html=True
+)
