@@ -56,8 +56,8 @@ pip install streamlit pandas numpy plotly meteostat scikit-learn imbalanced-lear
 streamlit run app.py
 ```
 
-### 5. Explore the Dashboard
-Visit `http://localhost:8501` in your browser to interact with the app.
+### 5. Explore the Dashboard  
+Visit [Weather Prediction App Dashboard](https://weather--prediction-app.streamlit.app/) in your browser to interact with the app.
 
 ---
 
