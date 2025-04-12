@@ -1,18 +1,21 @@
 <h1 align="center">🌧️ Delhi Weather Forecasting Dashboard</h1>
 
 <h2 align="center">📅 Project Overview</h2>
+
 The **Delhi Weather Forecasting Dashboard** is an interactive and visually rich Streamlit application that utilizes historical weather data and machine learning models to forecast future weather conditions in Delhi. This tool is especially helpful for users who want quick and informed weather insights based on past trends or customized parameter inputs.
 
-<h2 align="center"> 🔧 Key Features & Technologies</h2>
-### Features:
-- Interactive dashboard for weather insights and forecasts.
-- Predict next-day temperature, precipitation probability, and weather condition.
-- Two prediction modes:
-  - Based on selected historical dates.
-  - Manual input of weather parameters.
-- Performance metrics to evaluate model accuracy (RMSE, classification accuracy).
-- Visual comparison between predicted and actual temperature.
-- Styled for dark mode with a modern look and weather-themed icons.
+<h2 align="center">🔧 Key Features & Technologies</h2>
+
+### Features
+
+- Interactive dashboard for weather insights and forecasts.  
+- Predict next-day temperature, precipitation probability, and weather condition.  
+- Two prediction modes:  
+  - Based on selected historical dates.  
+  - Manual input of weather parameters.  
+- Performance metrics to evaluate model accuracy (RMSE, classification accuracy).  
+- Visual comparison between predicted and actual temperature.  
+- Styled for dark mode with a modern look and weather-themed icons.  
 
 ### Technologies Used:
 - **Python**
@@ -53,8 +56,8 @@ pip install streamlit pandas numpy plotly meteostat scikit-learn imbalanced-lear
 streamlit run app.py
 ```
 
-### 5. Explore the Dashboard  
-Visit [Weather Prediction App Dashboard](https://weather--prediction-app.streamlit.app/) in your browser to interact with the app.
+### 5. Explore the Dashboard
+Visit `http://localhost:8501` in your browser to interact with the app.
 
 ---
 
